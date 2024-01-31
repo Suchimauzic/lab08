@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DB  extends SQLiteOpenHelper{
 
     public DB(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -41,6 +43,20 @@ public class DB  extends SQLiteOpenHelper{
         Cursor cur = db.rawQuery(sql, null);
         if(cur.moveToFirst() == true) return cur.getString(0);
         return "";
+    }
+
+    public void getAllNotes(ArrayList<mynote> lst) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT id, txt FROM notes;";
+        Cursor cur = db.rawQuery(sql, null);
+        if (cur.moveToFirst() == true) {
+            do {
+                mynote n = new mynote();
+                n.id = cur.getInt(0);
+                n.txt = cur.getString(1);
+                lst.add(n);
+            } while (cur.moveToNext() == true);
+        }
     }
 
     @Override
