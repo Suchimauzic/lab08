@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(ctx, Main2Activity.class);
             i.putExtra("note-id", n.id);
             i.putExtra("note-id", n.txt);
+            startActivityForResult(i, 404);
         });
 
         update_list();

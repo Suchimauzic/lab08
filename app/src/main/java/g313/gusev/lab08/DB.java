@@ -59,6 +59,12 @@ public class DB  extends SQLiteOpenHelper{
         }
     }
 
+    public void alterNote(int id, String txt) {
+        String sid = String.valueOf(id);
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE txt FROM note WHERE";
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checkable="true"
+        android:enabled="true"
         android:icon="@drawable/plus"
         android:title="@string/lab_new"
         app:showAsAction="always" />
