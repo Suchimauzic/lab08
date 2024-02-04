@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -62,7 +63,16 @@ public class DB  extends SQLiteOpenHelper{
     public void alterNote(int id, String txt) {
         String sid = String.valueOf(id);
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "UPDATE txt FROM note WHERE";
+        String sql = "UPDATE notes SET txt = '" + txt + "' WHERE id = " + sid + ";";
+        db.execSQL(sql);
+    }
+
+    public void deleteNote(int id) {
+        String sid = String.valueOf(id);
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "DELETE FROM notes WHERE id = " + sid + ";";
+        Cursor cur = db.rawQuery(sql, null);
+        if (cur.moveToFirst() == true) db.execSQL(sql);
     }
 
     @Override
