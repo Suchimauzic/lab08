@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             mynote n = adp.getItem(position);
             Intent i = new Intent(ctx, Main2Activity.class);
             i.putExtra("note-id", n.id);
-            i.putExtra("note-id", n.txt);
+            i.putExtra("note-txt", n.txt);
             startActivityForResult(i, 404);
         });
 
@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        update_list();
+        if (requestCode == 404) {
+            update_list();
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
