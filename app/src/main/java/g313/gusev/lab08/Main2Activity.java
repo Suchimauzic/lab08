@@ -4,45 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity {
 
-    EditText txtctl, txtId;
+    EditText editNode, editId;
     int nid;
     String txt;
-    TextView tvtxt, idtxt;
+    TextView txtNote, txtId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        txtctl = findViewById(R.id.txt_content);
-        idtxt = findViewById(R.id.txtId);
-        //tvtxt = findViewById(R.id.currentNote);
-        //txtId = findViewById(R.id.txtIdElem);
+        editNode = findViewById(R.id.editTxtNode);
+        editId = findViewById(R.id.editTxtId);
+        txtNote = findViewById(R.id.currentTxtNote);
+        txtId = findViewById(R.id.currentTxtId);
 
         Intent i = getIntent();
         nid = i.getIntExtra("note-id", 0);
         txt = i.getStringExtra("note-txt");
 
         txt = String.valueOf(txt);
-        tvtxt.setText(txt);
-        idtxt.setText(String.valueOf(nid));
-        //txtId.setText(String.valueOf(nid));
-        //txtctl.setText(txt);
+
+        txtNote.setText(txt);
+        txtId.setText(String.valueOf(nid));
+        editId.setText(String.valueOf(nid));
+        editNode.setText(txt);
     }
 
     @Override
@@ -54,9 +52,18 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        int newInt;
 
         if (id == R.id.item_save) {
-            g.notes.alterNote(nid, txtctl.getText().toString());
+            try {
+                newInt = Integer.valueOf(editId.getText().toString());
+            }
+            catch (Exception ex) {
+                Toast.makeText(this, "Это конечно перебор....", Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
+            }
+
+            g.notes.alterNote(nid, editId.getText().toString(), editNode.getText().toString());
             Toast.makeText(this, "Значения поля было изменено!", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.item_delete) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
